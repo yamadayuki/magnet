@@ -4,12 +4,13 @@ jobs:
     docker:
       - image: alpine:latest
 
+    working_directory: ~/repo
+
     steps:
       - checkout
 
       - setup_remote_docker:
           docker_layer_caching: true
 
-      - run:
-          name: Build Docker Image
-          command: docker build -t magnet:$CIRCLE_SHA1 .
+      - run: |
+          docker build -t magnet:$CIRCLE_SHA1 .

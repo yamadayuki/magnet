@@ -29,6 +29,28 @@ const basicAuthMiddleware = (req, res) => {
   return true;
 };
 
+const htmlHandler = async (req, res) => {
+  return await handler(req, res, {
+    rewrites: [
+      {
+        source: "/**",
+        destination: path.join(TARGET_DIRECTORY, "/index.html"),
+      },
+    ],
+  });
+};
+
+const assetsHandler = async (req, res) => {
+  return await handler(req, res, {
+    public: path.resolve(__dirname, TARGET_DIRECTORY),
+  });
+};
+
+const isHtml = (req, res) => {
+  const accept = req.headers.accept;
+  return accept && accept.match("text/html");
+};
+
 const server = micro(async (req, res) => {
   if (req.url === "/ping") {
     micro.send(res, 200, "pong");
@@ -42,14 +64,11 @@ const server = micro(async (req, res) => {
       return;
     }
 
-    return await handler(req, res, {
-      rewrites: [
-        {
-          source: "/**",
-          destination: path.join(TARGET_DIRECTORY, "/index.html"),
-        },
-      ],
-    });
+    if (isHtml(req, res)) {
+      return await htmlHandler(req, res);
+    } else {
+      return await assetsHandler(req, res);
+    }
   } catch (err) {
     console.error(err);
 
@@ -57,4 +76,6 @@ const server = micro(async (req, res) => {
   }
 });
 
-server.listen(PORT);
+server.listen(PORT, () => {
+  console.log(`Listening server on localhost:${PORT}`);
+});

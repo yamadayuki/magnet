@@ -7,6 +7,7 @@ const ENV = process.env.NODE_ENV || "sandbox";
 const TARGET_DIRECTORY = process.env.TARGET_DIRECTORY || ENV;
 const BASIC_AUTH_USERNAME = process.env.BASIC_AUTH_USERNAME;
 const BASIC_AUTH_PASSWORD = process.env.BASIC_AUTH_PASSWORD;
+const PORT = process.env.PORT || 3000;
 
 const basicAuthMiddleware = (req, res) => {
   if (BASIC_AUTH_USERNAME && BASIC_AUTH_PASSWORD) {
@@ -56,4 +57,4 @@ const server = micro(async (req, res) => {
   }
 });
 
-server.listen(3031);
+server.listen(PORT);

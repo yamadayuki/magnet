@@ -1,0 +1,12 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: alpine:latest
+
+    steps:
+      - checkout
+
+      - run:
+          name: Build
+          command: docker build -t magnet .

@@ -3,8 +3,11 @@
   "version": "0.0.0",
   "description": "",
   "main": "index.js",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "release-major": "npm version major && git push origin master --tags",
+    "release-minor": "npm version minor && git push origin master --tags",
+    "release-patch": "npm version patch && git push origin master --tags"
   },
   "keywords": [],
   "author": "",

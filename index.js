@@ -29,6 +29,11 @@ const basicAuthMiddleware = (req, res) => {
 };
 
 const server = micro(async (req, res) => {
+  if (req.url === "/ping") {
+    micro.send(res, 200, "pong");
+    return;
+  }
+
   try {
     const authorized = basicAuthMiddleware(req, res);
 

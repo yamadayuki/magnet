@@ -4,6 +4,7 @@ const handler = require("serve-handler");
 const basicAuth = require("basic-auth");
 
 const ENV = process.env.NODE_ENV || "sandbox";
+const TARGET_DIRECTORY = process.env.TARGET_DIRECTORY || ENV;
 const BASIC_AUTH_USERNAME = process.env.BASIC_AUTH_USERNAME;
 const BASIC_AUTH_PASSWORD = process.env.BASIC_AUTH_PASSWORD;
 
@@ -39,7 +40,7 @@ const server = micro(async (req, res) => {
       rewrites: [
         {
           source: "/**",
-          destination: path.join(ENV, "/index.html"),
+          destination: path.join(TARGET_DIRECTORY, "/index.html"),
         },
       ],
     });
